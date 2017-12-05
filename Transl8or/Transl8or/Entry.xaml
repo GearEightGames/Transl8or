@@ -1,0 +1,50 @@
+﻿<Window x:Class="Transl8or.Entry"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Transl8or"
+        mc:Ignorable="d"
+        Title="Entry" Height="200" Width="300" ResizeMode="NoResize">
+    <Window.Resources>
+        <DataTemplate x:Key="RecentProjectsItemTemplate">
+            <DockPanel>
+                <Grid HorizontalAlignment="Stretch" Width="210">
+                    <Label Padding="5,5,5,0">
+                        <TextBlock TextTrimming="CharacterEllipsis" Text="{Binding Path=Name}"/>
+                    </Label>
+                    <Label Padding="5,20,5,5" Foreground="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" >
+                        <TextBlock TextTrimming="CharacterEllipsis" Text="{Binding Path=Path}"/>
+                    </Label>
+                </Grid>
+                <Button Margin="0,10" Tag="{Binding Path=.}" Padding="10,0,10,0" Content="Open" Click="Open_Click"/>
+            </DockPanel>
+        </DataTemplate>
+    </Window.Resources>
+    <Grid>
+        <TabControl>
+            <TabItem Header="Recent Projects">
+                <Grid>
+                    <ListBox x:Name="lbRecent" ItemsSource="{Binding Path=Recent}" ItemTemplate="{StaticResource RecentProjectsItemTemplate}">
+                    </ListBox>
+                    <Label x:Name="lblWarning" Visibility="Hidden" Content="Can't find any projects."/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="New Project">
+                <StackPanel Margin="10,0,10,0">
+                    <Label>Name</Label>
+                    <TextBox x:Name="tbName" TextChanged="tbName_TextChanged" BorderBrush="#FFB3B3B3"/>
+                    <Label>Directory</Label>
+                    <DockPanel FlowDirection="RightToLeft">
+                        <Button x:Name="btnDirectory" Content="..." Margin="0,0,10,0" Padding="5,0,5,0" Click="btnDirectory_Click"/>
+                        <TextBox FlowDirection="LeftToRight" x:Name="tbDirectory" TextChanged="tbDirectory_TextChanged" BorderBrush="#FFB3B3B3" />
+                    </DockPanel>
+                    <DockPanel Margin="0,10,0,0" FlowDirection="RightToLeft">
+                        <Button x:Name="btnCreate" Padding="30,0,30,0" Content="Create" Click="btnCreate_Click"/>
+                        <Label FlowDirection="LeftToRight" x:Name="lblInfo" Content=""/>
+                    </DockPanel>
+                </StackPanel>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>
